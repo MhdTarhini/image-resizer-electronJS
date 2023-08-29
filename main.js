@@ -3,12 +3,19 @@ const path = require("path");
 
 const isMac = process.platform === "darwin";
 
+const isDev = process.env.NODE_ENV !== "production";
+
 function createMainWindow() {
   const mainWindow = new BrowserWindow({
     title: "Image Resizer",
-    width: 500,
-    height: 600,
+    width: isDev ? 1000 : 500,
+    height: 800,
   });
+
+  //open devtools if in dev env
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.loadFile(path.join(__dirname, "./renderer/index.html"));
 }
